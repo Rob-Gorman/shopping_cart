@@ -4,7 +4,7 @@ const ProductEditForm = ({details, btnHandler, handleEdit}) => {
   const [price, setPrice] = useState(details.price || "")
   const [quantity, setQuantity] = useState(details.quantity || "")
 
-  const submitEdit = (e) => {
+  const handleUpdate = (e) => {
     handleEdit({title, price, quantity}, details._id)
     btnHandler()
   }
@@ -29,7 +29,7 @@ const ProductEditForm = ({details, btnHandler, handleEdit}) => {
         </div>
 
         <div className="actions form-actions">
-          <a className="button" onClick={submitEdit}>Update</a>
+          <a className="button" onClick={handleUpdate}>Update</a>
           <a className="button" onClick={btnHandler}>Cancel</a>
         </div>
       </form>

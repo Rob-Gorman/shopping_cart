@@ -5,15 +5,15 @@ const AddProduct = ({handleAdd}) => {
   const [formVisibility, setFormVisibility] = useState(false)
   const [formFields, setFormFields] = useState(initialFields)
 
-  const showForm = (e) => {
+  const handleShowForm = (e) => {
     setFormVisibility(!formVisibility);
   }
   const formClass = formVisibility ? "add-form visible" : "add-form"
 
-  const submitProduct = () => {
+  const handleSubmit = () => {
     handleAdd(formFields, () => {
       setFormFields(initialFields);
-      showForm();
+      handleShowForm();
     })
   }
 
@@ -25,7 +25,7 @@ const AddProduct = ({handleAdd}) => {
   // });
   return (
     <div className={formClass}>
-      <p><a className="button add-product-button" onClick={showForm}>Add A Product</a></p>
+      <p><a className="button add-product-button" onClick={handleShowForm}>Add A Product</a></p>
       <h3>Add Product</h3>
       <form>
         <div className="input-group">
@@ -44,8 +44,8 @@ const AddProduct = ({handleAdd}) => {
         </div>
 
         <div className="actions form-actions">
-          <a className="button" onClick={submitProduct}>Add</a>
-          <a className="button" onClick={showForm}>Cancel</a>
+          <a className="button" onClick={handleSubmit}>Add</a>
+          <a className="button" onClick={handleShowForm}>Cancel</a>
         </div>
       </form>
     </div>

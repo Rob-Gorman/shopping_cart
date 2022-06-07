@@ -3,7 +3,7 @@ import { useState } from "react"
 
 const Product = ({details, handleRemove, handleEdit}) => {
   const [edit, setEdit] = useState(false)
-  function closeEdit(e) {
+  function handleClose(e) {
     setEdit(false)
   }
 
@@ -23,7 +23,7 @@ const Product = ({details, handleRemove, handleEdit}) => {
         }
         <a className="delete-button" onClick={() => handleRemove(details._id)}><span>X</span></a>
       </div>
-      {edit ? <ProductEditForm details={details} btnHandler={closeEdit} handleEdit={handleEdit}/> : null}
+      {edit ? <ProductEditForm details={details} onClose={handleClose} onEdit={handleEdit}/> : null}
     </div>
   )
 }
