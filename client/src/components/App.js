@@ -6,6 +6,7 @@ import axios from 'axios'
 
 const App = () => {
   const [data, setData] = useState([])
+  const [cart, setCart] = useState([])
   useEffect(() => { 
     let fetchData = async () => {
       let {data} = await axios.get("/api/products")
@@ -13,6 +14,15 @@ const App = () => {
     }
     fetchData()
   }, [])
+
+  useEffect(() => {
+    fetchCart()
+  }, [])
+
+  const fetchCart = async () => {
+    let response = await axios.get("/api/cart")
+    setCart(response.data)
+  }
 
   const addProduct = async (formFields, callback) => {
     let response = await axios.post('/api/products', {...formFields})
@@ -42,10 +52,26 @@ const App = () => {
     }))
   }
 
+  const addToCart = async(id) => {
+    console.log(id)
+    await axios.post(`/api/add-to-cart`, {productId: id})
+    await fetchCart()
+    // let productAdded = data.map(({_id}) => _id === id)
+    setData(data.map(product => {
+      if (product._id === id) return {...product, quantity: product.quantity-1}
+      else return product
+    }))
+  }
+
+  const checkout = async() => {
+    await axios.post(`/api/checkout`)
+    setCart([])
+  }
+
   return (
     <div id="app">
-      <Header />
-      <ShopBody data={data} handleAdd={addProduct} handleRemove={removeProduct} handleEdit={editProduct} />
+      <Header cart={cart} onCheckout={checkout}/>
+      <ShopBody data={data} onAdd={addProduct} onRemove={removeProduct} onEdit={editProduct} onCartAdd={addToCart} />
     </div>
   );
 };

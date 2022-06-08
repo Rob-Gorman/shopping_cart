@@ -1,9 +1,12 @@
 import { useState } from 'react'
 
 let initialFields = { title: "", price: "", quantity: ""}
-const AddProduct = ({handleAdd}) => {
+const AddProduct = ({onAdd}) => {
   const [formVisibility, setFormVisibility] = useState(false)
-  const [formFields, setFormFields] = useState(initialFields)
+  // const [formFields, setFormFields] = useState(initialFields)
+  const [title, setTitle] = useState("")
+  const [price, setPrice] = useState("")
+  const [quantity, setQuantity] = useState("")
 
   const handleShowForm = (e) => {
     setFormVisibility(!formVisibility);
@@ -11,8 +14,9 @@ const AddProduct = ({handleAdd}) => {
   const formClass = formVisibility ? "add-form visible" : "add-form"
 
   const handleSubmit = () => {
-    handleAdd(formFields, () => {
-      setFormFields(initialFields);
+    let formFields = {title, price, quantity}
+    onAdd(formFields, () => {
+      [setTitle, setPrice, setQuantity].forEach(f => f(""));
       handleShowForm();
     })
   }
@@ -30,17 +34,17 @@ const AddProduct = ({handleAdd}) => {
       <form>
         <div className="input-group">
           <label htmlFor="product-name">Product Name</label>
-          <input type="text" id="product-name" value={formFields.title} onChange={(e) => setFormFields({...formFields, title: e.target.value})}/>
+          <input type="text" id="product-name" value={title} onChange={(e) => setTitle(e.target.value)}/>
         </div>
 
         <div className="input-group">
           <label htmlFor="product-price">Price</label>
-          <input type="text" id="product-price" value={formFields.price} onChange={(e) => setFormFields({...formFields, price: e.target.value})}/>
+          <input type="text" id="product-price" value={price} onChange={(e) => setPrice(e.target.value)}/>
         </div>
 
         <div className="input-group">
           <label htmlFor="product-quantity">Quantity</label>
-          <input type="text" id="product-quantity" value={formFields.quantity} onChange={(e) => setFormFields({...formFields, quantity: e.target.value})}/>
+          <input type="text" id="product-quantity" value={quantity} onChange={(e) => setQuantity(e.target.value)}/>
         </div>
 
         <div className="actions form-actions">

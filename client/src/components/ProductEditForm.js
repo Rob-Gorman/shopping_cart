@@ -1,12 +1,12 @@
 import { useState } from 'react';
-const ProductEditForm = ({details, btnHandler, handleEdit}) => {
+const ProductEditForm = ({details, onClose, onEdit}) => {
   const [title, setTitle] = useState(details.title || "")
   const [price, setPrice] = useState(details.price || "")
   const [quantity, setQuantity] = useState(details.quantity || "")
 
   const handleUpdate = (e) => {
-    handleEdit({title, price, quantity}, details._id)
-    btnHandler()
+    onEdit({title, price, quantity}, details._id)
+    onClose()
   }
 
   return (
@@ -30,7 +30,7 @@ const ProductEditForm = ({details, btnHandler, handleEdit}) => {
 
         <div className="actions form-actions">
           <a className="button" onClick={handleUpdate}>Update</a>
-          <a className="button" onClick={btnHandler}>Cancel</a>
+          <a className="button" onClick={onClose}>Cancel</a>
         </div>
       </form>
     </div>

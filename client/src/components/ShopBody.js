@@ -1,16 +1,16 @@
-import Product from "./Product"
+import EditableProduct from "./EditableProduct"
 import AddProduct from "./AddProduct"
 
-const ShopBody = ({data, handleAdd, handleRemove, handleEdit}) => {
+const ShopBody = ({data, onAdd, onRemove, onEdit, onCartAdd}) => {
   return (
     <main>
       <div className="product-listing">
         <h2>Products</h2>
         {data.map(product => {
-          return <Product key={product._id} details={product} handleRemove={handleRemove} handleEdit={handleEdit}/>
+          return <EditableProduct key={product._id} details={product} onRemove={onRemove} onEdit={onEdit} onCartAdd={onCartAdd} />
         })}
       </div>
-      <AddProduct handleAdd={handleAdd} />
+      <AddProduct onAdd={onAdd} />
     </main>
   )
 }
