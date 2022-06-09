@@ -2,7 +2,7 @@ import Product from './Product'
 import ProductEditForm from './ProductEditForm'
 import { useState } from 'react'
 
-const EditableProduct = ({details, onRemove, onEdit, onCartAdd}) => {
+const EditableProduct = ({ details }) => {
   const [edit, setEdit] = useState(false)
   function handleToggleEdit(e) {
     setEdit(!edit)
@@ -10,8 +10,8 @@ const EditableProduct = ({details, onRemove, onEdit, onCartAdd}) => {
 
   return (
     <div className="product">
-      <Product details={details} onRemove={onRemove} onToggleEdit={handleToggleEdit} edit={edit} onCartAdd={onCartAdd}/>
-      {edit ? <ProductEditForm details={details} onClose={handleToggleEdit} onEdit={onEdit}/> : null}
+      <Product details={details} onToggleEdit={handleToggleEdit} edit={edit} />
+      {edit ? <ProductEditForm details={details} onClose={handleToggleEdit} /> : null}
     </div>
   )
 }

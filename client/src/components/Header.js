@@ -1,10 +1,10 @@
 import Cart from "./Cart"
 
-const Header = ({cart, onCheckout}) => {
+const Header = () => {
   return (
     <header>
     <h1>The Shop!</h1>
-    <Cart cartItems={cart} onCheckout={onCheckout}/>
+    <Cart />
     </header>
   )
 }
