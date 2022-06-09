@@ -4,7 +4,7 @@ const cart = (state = [], action) => {
       return action.payload;
     }
     case "ADDED_TO_CART": {
-      let id = action.payload.product._id;
+      let id = action.payload.item._id;
       const itemExists = state.find(item => {
         return (id === item._id);
       })
