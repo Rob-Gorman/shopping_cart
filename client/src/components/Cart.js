@@ -1,25 +1,15 @@
 import { useSelector, useDispatch } from 'react-redux'
 import CartItem from './CartItem'
 import { useEffect } from 'react';
-import axios from 'axios';
-import { cartCheckedOut, cartInitialized } from '../actions/cartActions';
+import { getCart, checkout } from '../features/cart/cart';
 
 const Cart = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart);
 
   useEffect(() => {
-    const fetchCart = async () => {
-      let {data} = await axios.get("/api/cart")
-      dispatch(cartInitialized(data));
-    }
-    fetchCart()
+    dispatch(getCart())
   }, [dispatch])
-
-  const checkout = async() => {
-    await axios.post(`/api/checkout`)
-    dispatch(cartCheckedOut());
-  }
 
   let emptyCart = !cartItems.length
   let defaultCheckoutClass = "button checkout"
@@ -42,7 +32,7 @@ const Cart = () => {
       </tbody>
     </table>
     )}
-    <a className={checkoutClass} onClick={checkout}>Checkout</a>
+    <a className={checkoutClass} onClick={() => dispatch(checkout())}>Checkout</a>
   </div>
   )
 }

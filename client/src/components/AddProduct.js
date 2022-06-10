@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { productAdded } from '../actions/productActions';
-import axios from 'axios';
+import { addProduct } from '../features/products/products';
 
 const AddProduct = () => {
   const dispatch = useDispatch();
@@ -10,9 +9,12 @@ const AddProduct = () => {
   const [price, setPrice] = useState("")
   const [quantity, setQuantity] = useState("")
 
-  const addProduct = async (formFields) => {
-    let response = await axios.post('/api/products', {...formFields})
-    dispatch(productAdded(response.data));
+  const handleSubmit = () => {
+    let formFields = { title, price, quantity };
+    dispatch(addProduct({formFields, callback: resetForm}));
+  }
+
+  const resetForm = () => {
     [setTitle, setPrice, setQuantity].forEach(f => f(""));
     handleShowForm();
   }
@@ -21,11 +23,6 @@ const AddProduct = () => {
     setFormVisibility(!formVisibility);
   }
   const formClass = formVisibility ? "add-form visible" : "add-form"
-
-  const handleSubmit = () => {
-    let formFields = {title, price, quantity}
-    addProduct(formFields);
-  }
 
   // router.post("/products", (req, res, next) => {
   //   const { title, price, quantity } = req.body;

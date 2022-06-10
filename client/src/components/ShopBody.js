@@ -1,20 +1,15 @@
 import EditableProduct from "./EditableProduct"
 import AddProduct from "./AddProduct"
 import { useEffect } from "react";
-import axios from 'axios';
 import { useDispatch, useSelector } from "react-redux";
-import { productsInitialized } from "../actions/productActions";
+import { getProducts } from "../features/products/products";
 
 const ShopBody = () => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products);
 
   useEffect(() => { 
-    let fetchData = async () => {
-      let {data} = await axios.get("/api/products")
-      dispatch(productsInitialized(data));
-    }
-    fetchData()
+    dispatch(getProducts())// getComments)
   }, [dispatch])
 
   return (
