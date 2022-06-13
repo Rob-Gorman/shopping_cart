@@ -1,32 +1,33 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+import { ProductContext, addProduct } from '../context/products-context'
 
-let initialFields = { title: "", price: "", quantity: ""}
-const AddProduct = ({onAdd}) => {
+const AddProduct = () => {
   const [formVisibility, setFormVisibility] = useState(false)
   // const [formFields, setFormFields] = useState(initialFields)
   const [title, setTitle] = useState("")
   const [price, setPrice] = useState("")
   const [quantity, setQuantity] = useState("")
 
+  const { dispatch } = useContext(ProductContext)
+
   const handleShowForm = (e) => {
     setFormVisibility(!formVisibility);
   }
   const formClass = formVisibility ? "add-form visible" : "add-form"
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault()
     let formFields = {title, price, quantity}
-    onAdd(formFields, () => {
-      [setTitle, setPrice, setQuantity].forEach(f => f(""));
-      handleShowForm();
-    })
+    addProduct(formFields, dispatch, resetForm)
   }
-
-  // router.post("/products", (req, res, next) => {
-  //   const { title, price, quantity } = req.body;
-  //   Product.create({ title, price, quantity })
-  //     .then((product) => res.json(product))
-  //     .catch((err) => next(err));
-  // });
+  
+  const resetForm = () => {
+    setTitle("")
+    setPrice("")
+    setQuantity("")
+    handleShowForm();
+  }
+  
   return (
     <div className={formClass}>
       <p><a className="button add-product-button" onClick={handleShowForm}>Add A Product</a></p>

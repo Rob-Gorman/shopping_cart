@@ -1,12 +1,15 @@
-import { useState } from 'react';
-const ProductEditForm = ({details, onClose, onEdit}) => {
+import { useContext, useState } from 'react';
+import { editProduct, ProductContext } from '../context/products-context';
+
+const ProductEditForm = ({details, onClose}) => {
   const [title, setTitle] = useState(details.title || "")
   const [price, setPrice] = useState(details.price || "")
   const [quantity, setQuantity] = useState(details.quantity || "")
 
+  const {dispatch} = useContext(ProductContext)
+
   const handleUpdate = (e) => {
-    onEdit({title, price, quantity}, details._id)
-    onClose()
+    editProduct({title, price, quantity}, details._id, dispatch, onClose)
   }
 
   return (
